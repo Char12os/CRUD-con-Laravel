@@ -94,6 +94,9 @@ http://localhost/phpmyadmin5.2.3/
 ```
 Y se trabajo en entorno local con WAMP
 
-## Security Vulnerabilities
+## Proyecto funcionando 
+l<img width="1904" height="551" alt="image" src="https://github.com/user-attachments/assets/c1de12c1-3148-4c10-ad96-d05919c00bad" />
+Nos permite agregar un producto, eliminarlo y editarlo. 
+
 
 
