@@ -11,37 +11,89 @@
 Este proyecto consiste en la creación de un CRUD básico utilizando Laravel, donde se gestionan productos con los campos: descripción, precio y stock.
 
 ## Creación del proyecto
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
 ```bash
-composer require laravel/boost --dev
+laravel new crud_rapido
+```
+Modelo de migración
+```bash
+php artisan make:model Product -m
+```
+Estructurta de migración
+```bash
+$table->id();
+$table->string('description');
+$table->double('price', 8, 2);
+$table->integer('stock');
+$table->timestamps();
+```
+Migraciones
+```bash
+php artisan migrate
+```
+## Problemas encontrados
+## Error: Key too long
+Durante la ejecución de las migraciones, se presentó el error relacionado con la longitud de las claves en MySQL.
+Se agregó la siguiente configuración en el archivo AppServiceProvider.php:
+```bash
+use Illuminate\Support\Facades\Schema;
 
-php artisan boost:install
+public function boot(): void
+{
+    Schema::defaultStringLength(191);
+}
+```
+Y luego ejecutamos:
+```bash
+php artisan migrate:fresh
+```
+## Error al insertar productos
+Se presentó un error al intentar guardar un producto desde el formulario.
+El error estaba en la validación de datos enviada al modelo (Product::create()).
+<img width="1115" height="780" alt="image" src="https://github.com/user-attachments/assets/381e883c-9aa0-4e6f-a193-94054c7194d9" />
+El problema ocurre en:
+```bash
+Product::create($request->validated());
+```
+Solución aplicada:
+
+Se corrigieron las reglas de validación en el archivo:
+```bash
+app/Http/Requests/ProductRequest.php
+```
+Dentro de la función rules() para asegurar que los datos enviados coincidan con la estructura de la base de datos.
+```bash
+public function rules()
+{
+    return [
+        'description' => 'required|string|max:255',
+        'price' => 'required|numeric',
+        'stock' => 'required|integer',
+    ];
+}
+```
+## Generador CRUD
+Utilizamos comando como: 
+```bash
+Instalar generador: 
+composer require ibex/crud-generator --dev
+
+Generar CRUD:
+php artisan make:crud products
+
+Ejecutar proyecto
+php artisan serve
+
+Y accedemos a
+http://127.0.0.1:8000/products
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Base de datos utilizada
+Se utilizó phpMyAdmin para la gestión de base de datos:
+```bash
+http://localhost/phpmyadmin5.2.3/
+```
+Y se trabajo en entorno local con WAMP
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
