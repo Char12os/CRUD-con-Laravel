@@ -98,5 +98,13 @@ Y se trabajo en entorno local con WAMP
 l<img width="1904" height="551" alt="image" src="https://github.com/user-attachments/assets/c1de12c1-3148-4c10-ad96-d05919c00bad" />
 Nos permite agregar un producto, eliminarlo y editarlo. 
 
+## Desarrollado por  
+Este laboratorio ha sido desarrollado por el estudiante de la Universidad Tecnológica de Panamá:
 
-
+| Campo | Información |
+|------|------------|
+| Nombre | Elisa Oses |
+| Correo | elisa.oses@utp.ac.pa |
+| Curso | Desarrollo De Software VII |
+| Instructor | Ing. Irina Fong |
+| Fecha | 27 de abril de 2026 |
